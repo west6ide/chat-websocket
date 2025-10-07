@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Chat</title>
+
+    <!-- Bootstrap 4.6 (нужен именно v4 для BootstrapVue) -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- BootstrapVue 2.x CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-vue@2.23.1/dist/bootstrap-vue.min.css">
+
+    <!-- Vue 2 (прод-сборка) -->
+    <script src="https://unpkg.com/vue@2.7.16/dist/vue.min.js"></script>
+
+    <!-- BootstrapVue 2.x JS (совместим только с Vue 2) -->
+    <script src="https://unpkg.com/bootstrap-vue@2.23.1/dist/bootstrap-vue.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@2.23.1/dist/bootstrap-vue-icons.min.js"></script>
+  </head>
+
+  <body>
+    <div id="app" class="container p-3">
+      <h3>Chat</h3>
+      <p>WS status: {{ status }}</p>
+      <pre>{{ lastMessage }}</pre>
+
+      <!-- Проверим BootstrapVue компонент -->
+      <b-button variant="primary" @click="connectToWebsocket">Reconnect</b-button>
+
+       <div class="container-fluid h-100">
+   <div class="row justify-content-center h-100">
+     <div class="col-md-8 col-xl-6 chat">
+       <div class="card">
+         <div class="card-header msg_head">
+           <div class="d-flex bd-highlight justify-content-center">
+             Chat
+           </div>
+         </div>
+         <div class="card-body msg_card_body" ref="msgBody">
+          <div 
+          v-for="(m, i) in messages"
+          :key="i"
+          :class="['d-flex', m.mine ? 'justify-content-end' : 'justify-content-start', 'mb-4']">
+          <div :class="m.mine ? 'msg_cotainer_send' : 'msg_cotainer'">
+            {{ m.message }}
+               <span class="msg_time"></span>
+             </div>
+           </div>
+         </div>
+         <div class="card-footer">
+           <div class="input-group">
+             <textarea
+                       v-model="newMessage"
+                       name=""
+                       class="form-control type_msg"
+                       placeholder="Type your message..."
+                       @keyup.enter.exact="sendMessage"
+                       ></textarea>
+             <div class="input-group-append">
+               <span class="input-group-text send_btn" @click="sendMessage"
+                     >></span
+                 >
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+</div>
+    </div>
+
+    <!-- твой скрипт -->
+    <script src="assets/app.js"></script>
+  </body>
+</html>
